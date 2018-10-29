@@ -16,65 +16,10 @@
       <h2 class="welcomeBox__title">Stellar Account Viewer</h2>
       <p>Use this lightweight client to send and receive lumens over the Stellar network.</p>
     </div>
-    <form ng-submit="login.submit()" class="loginBox">
-      <p class="loginBox__label">Secret key:</p>
-      <input type="password" ng-model="login.secret" class="loginBox__input" placeholder="Example: SCHKBJ............ZLJ7" />
-
-      <div class="s-alert s-alert--alert" ng-if="login.alerts.length > 0">
-        <span ng-repeat="alert in login.alerts">
-          {{alert.title}}<br /><br />
-          {{alert.text}}
-        </span>
-      </div>
-
-      <button type="submit" class="s-button loginBox__submit" ng-class="{'is-disabled': login.processing}" ng-disabled="login.processing">Sign in</button>
-    </form>
     <div class="middleBox">
-        <p>
-          Generate key pair for a new account
-        </p>
-
-        <div ng-if="login.newKeypair">
-          <p class="loginBox__warning">
-            <strong>ATTENTION:</strong>
-            Please write down your secret key and keep it safe. It won't be displayed again.
-            You will lose access to your lumens if you lose your secret key.
-          </p>
-
-          <div class="keypair">
-            Public Key:<br />
-            <code>{{login.newKeypair.publicKey}}</code><br /><br />
-
-            Secret Key:<br />
-            <code>{{login.newKeypair.secretKey}}</code>
-          </div>
-        </div>
-
-        <button type="button" class="s-button loginBox__submit" ng-click="login.generate()">Generate</button>
-    </div>
-    <div class="middleBox">
-      Use Hardware Wallet
-      <br/>
-      <div class="loginBox__ledgerAccount">
-        <input id="ledgerDefaultAccountCheckbox" type="checkbox" ng-model="hideBip32Input" ng-init="hideBip32Input=true" />
-        <label for="ledgerDefaultAccountCheckbox" ng-if="hideBip32Input">Use default account</label>
-        <input type="text" ng-model="login.bip32Path" class="loginBox__input" placeholder="BIP32 path: 44'/148'/n'" ng-if="!hideBip32Input" />
-      </div>
-
-      <button type="button" class="s-button loginBox__submit" ng-click="login.proceedWithLedger()" ng-disabled="login.ledgerStatus != 'Connected'">Sign in with Ledger</button>
-      <div class="loginBox__info">
-        Available on Chrome and Opera. Install the Stellar app from Ledger and enable browser support in the app settings.
-      </div>
-      <div class="s-alert s-alert--alert" ng-if="login.ledgerAlerts.length > 0">
-        <span ng-repeat="alert in login.ledgerAlerts">
-          {{alert.title}}<br /><br />
-          {{alert.text}}
-        </span>
-      </div>
-
       <button type="button" class="s-button loginBox__submit" ng-click="login.proceedWithTrezor()">Sign in with Trezor</button>
       <div class="loginBox__info">
-        Requires Trezor Bridge and Trezor One (with firmware 1.7.0+) or Trezor Model T (with firmware 2.0.8+).
+        Requires Trezor Bridge and Trezor One (with firmware 1.7.1+) or Trezor Model T (with firmware 2.0.8+).
       </div>
       <div class="s-alert s-alert--alert" ng-if="login.trezorAlerts.length > 0">
         <span ng-repeat="alert in login.trezorAlerts">
@@ -83,11 +28,8 @@
         </span>
       </div>
     </div>
-    <div class="middleBox">
-      Looking for a more advanced wallet? <a href="https://www.stellar.org/lumens/wallets/">Proceed here &raquo;</a>
-    </div>
     <div class="legacyBox">
-      Looking for legacy login? <a href="https://launch.stellar.org/">Proceed here &raquo;</a>
+      Don't have Trezor? <a href="https://shop.trezor.io/">Get one here!</a>
     </div>
   </div>
 </div>

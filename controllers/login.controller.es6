@@ -2,8 +2,6 @@ import {Intent} from "interstellar-core";
 import {Controller, Inject} from "interstellar-core";
 import {Keypair} from 'stellar-sdk';
 import {Alert, AlertGroup} from 'interstellar-ui-messages';
-import LedgerTransport from '@ledgerhq/hw-transport-u2f';
-import LedgerStr from '@ledgerhq/hw-app-str';
 import TrezorConnect from 'trezor-connect';
 
 @Controller("LoginController")
@@ -24,12 +22,7 @@ export default class LoginController {
       this.alerts = alerts;
     });
 
-    this.ledgerAlertGroup = new AlertGroup();
-    this.ledgerAlertGroup.registerUpdateListener(alerts => {
-      this.ledgerAlerts = alerts;
-    });
     this.bip32Path = "44'/148'/0'";
-    this.connectLedger();
 
     this.trezorAlertGroup = new AlertGroup();
     this.trezorAlertGroup.registerUpdateListener(alerts => {
@@ -52,50 +45,6 @@ export default class LoginController {
 
   toggleInfo() {
     this.showInfo = !this.showInfo;
-  }
-
-  connectLedger() {
-    const openTimeout = 60 * 60 * 1000; // an hour
-    this.ledgerStatus = 'Not connected';
-    LedgerTransport.create(openTimeout).then((transport) => {
-      new LedgerStr(transport).getAppConfiguration().then((result) =>{
-        this.ledgerStatus = 'Connected';
-        this.ledgerAppVersion = result.version;
-        this.$scope.$apply();
-      }).catch((err) => {
-        this.ledgerStatus = 'Error: ' + err;
-        this.$scope.$apply();
-      });
-    });
-  }
-
-  proceedWithLedger() {
-    const openTimeout = 60 * 1000; // one minute
-    try {
-      LedgerTransport.create(openTimeout).then((transport) => {
-        new LedgerStr(transport).getPublicKey(this.bip32Path).then((result) => {
-          let permanent = this.Config.get("permanentSession");
-          let data = { useLedger: true, bip32Path: this.bip32Path, ledgerAppVersion: this.ledgerAppVersion };
-          let address = result.publicKey;
-          this.Sessions.createDefault({address, data, permanent})
-            .then(() => this.broadcastShowDashboardIntent());
-        });
-      }).catch((err) => {
-        let alert = new Alert({
-          title: 'Failed to connect',
-          text: err,
-          type: Alert.TYPES.ERROR
-        });
-        this.ledgerAlertGroup.show(alert);
-      });
-    } catch (err) {
-      let alert = new Alert({
-        title: 'Failed to connect',
-        text: err,
-        type: Alert.TYPES.ERROR
-      });
-      this.ledgerAlertGroup.show(alert);
-    }
   }
 
   proceedWithTrezor() {

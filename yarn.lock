@@ -2,28 +2,6 @@
 # yarn lockfile v1
 
 
-"@ledgerhq/hw-app-str@^4.14.0":
-  version "4.19.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-app-str/-/hw-app-str-4.19.0.tgz#550befbc87e1d3bba0e81e751aa2f3baad8697d5"
-  dependencies:
-    "@ledgerhq/hw-transport" "^4.19.0"
-    base32.js "^0.1.0"
-    sha.js "^2.3.6"
-    tweetnacl "^1.0.0"
-
-"@ledgerhq/hw-transport-u2f@^4.13.0":
-  version "4.20.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport-u2f/-/hw-transport-u2f-4.20.0.tgz#4118ace4dce55e0630db6c69972d8a88c87ed674"
-  dependencies:
-    "@ledgerhq/hw-transport" "^4.19.0"
-    u2f-api "0.2.7"
-
-"@ledgerhq/hw-transport@^4.19.0":
-  version "4.19.0"
-  resolved "https://registry.yarnpkg.com/@ledgerhq/hw-transport/-/hw-transport-4.19.0.tgz#19a804aee1bfc4abac1dc9a2a7a582e79273f991"
-  dependencies:
-    events "^2.0.0"
-
 angular-cookies@^1.3.15:
   version "1.4.0"
   resolved "https://registry.yarnpkg.com/angular-cookies/-/angular-cookies-1.4.0.tgz#c520d6c9cc46d7c76f68c3b6b8aea5d561e90937"
@@ -131,7 +109,7 @@ balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
 
-base32.js@^0.1.0, base32.js@~0.1.0:
+base32.js@~0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/base32.js/-/base32.js-0.1.0.tgz#b582dec693c2f11e893cf064ee6ac5b6131a2202"
 
@@ -388,10 +366,6 @@ event-source-polyfill@0.0.7:
 events@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
-
-events@^2.0.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/events/-/events-2.1.0.tgz#2a9a1e18e6106e0e812aa9ebd4a819b3c29c0ba5"
 
 eventsource@^0.2.1:
   version "0.2.3"
@@ -1649,9 +1623,9 @@ toml@^2.3.0:
   version "2.3.3"
   resolved "https://registry.yarnpkg.com/toml/-/toml-2.3.3.tgz#8d683d729577cb286231dfc7a8affe58d31728fb"
 
-trezor-connect@^5.0.31:
-  version "5.0.31"
-  resolved "https://registry.yarnpkg.com/trezor-connect/-/trezor-connect-5.0.31.tgz#7ecf5e26e154962b638ddc35e68a52d57f4cc107"
+trezor-connect@^6.0.1:
+  version "6.0.1"
+  resolved "https://registry.yarnpkg.com/trezor-connect/-/trezor-connect-6.0.1.tgz#0fbf11d6bbae86ca9d4bb0750c5098a1649e851f"
   dependencies:
     babel-runtime "^6.26.0"
     events "^1.1.1"
@@ -1660,14 +1634,6 @@ trezor-connect@^5.0.31:
 tweetnacl@^0.13.0:
   version "0.13.3"
   resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-0.13.3.tgz#d628b56f3bcc3d5ae74ba9d4c1a704def5ab4b56"
-
-tweetnacl@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.yarnpkg.com/tweetnacl/-/tweetnacl-1.0.0.tgz#713d8b818da42068740bf68386d0479e66fc8a7b"
-
-u2f-api@0.2.7:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/u2f-api/-/u2f-api-0.2.7.tgz#17bf196b242f6bf72353d9858e6a7566cc192720"
 
 unc-path-regex@^0.1.2:
   version "0.1.2"

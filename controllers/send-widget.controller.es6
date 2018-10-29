@@ -6,8 +6,6 @@ import {Account, Asset, Keypair, Memo, Operation, Transaction, TransactionBuilde
 import {FederationServer} from 'stellar-sdk';
 import BasicClientError from '../errors';
 import knownAccounts from '../known_accounts';
-import LedgerTransport from '@ledgerhq/hw-transport-u2f';
-import LedgerStr from '@ledgerhq/hw-app-str';
 import {Network} from "stellar-base";
 import TrezorConnect from 'trezor-connect';
 
@@ -85,7 +83,6 @@ export default class SendWidgetController {
     // Used to display additional details on the "outcome" page describing why signing failed
     this.signingErrorMessage = null;
 
-    this.useLedger = this.session.data && this.session.data['useLedger'];
     this.useTrezor = this.session.data && this.session.data['useTrezor'];
     this.bip32Path = this.session.data && this.session.data['bip32Path'];
   }
@@ -206,7 +203,6 @@ export default class SendWidgetController {
     }
 
     this.sending = true;
-    this.ledgerError = false;
     this.signingErrorMessage = null;
 
     this.addressAlertGroup.clear();
@@ -413,24 +409,7 @@ export default class SendWidgetController {
           .addMemo(memo)
           .build();
 
-        if (this.useLedger) {
-          const openTimeout = 60 * 1000; // one minute
-          return LedgerTransport.create(openTimeout).then((transport) => {
-            const ledgerApi = new LedgerStr(transport);
-            return ledgerApi.signTransaction(this.bip32Path, transaction.signatureBase()).then(result => {
-              let signature = result['signature'];
-              let keyPair = Keypair.fromAccountId(this.session.address);
-              let hint = keyPair.signatureHint();
-              let decorated = new xdr.DecoratedSignature({hint, signature});
-              transaction.signatures.push(decorated);
-              return transaction;
-            }).catch(e => {
-              this.ledgerError = true;
-              throw e;
-            });
-          })
-        }
-        else if (this.useTrezor) {
+        if (this.useTrezor) {
           /*
           'memo' must always be present in the transaction parameters so default it
           to type 0 (no memo)
@@ -533,20 +512,10 @@ export default class SendWidgetController {
     this.success = false;
     this.needsResubmit = false;
 
-    if (this.ledgerError) {
-      if (e.errorCode == 2) {
-        this.outcomeMessage = `Couldn't connect to Ledger device. Connection can only be established using a secure connection.`;
-      } else if (e.errorCode == 5) {
-        this.outcomeMessage = `Ledger connection timeout.`;
-      } else {
-        this.outcomeMessage = 'Unknown error: '+JSON.stringify(e);
-      }
-    } else {
-      if (e.title != "Transaction Failed" && e.title != "Transaction Malformed") {
-        this.needsResubmit = true;
-      }
-      this.outcomeMessage = JSON.stringify(e, null, '  ');
+    if (e.title != "Transaction Failed" && e.title != "Transaction Malformed") {
+      this.needsResubmit = true;
     }
+    this.outcomeMessage = JSON.stringify(e, null, '  ');
   }
 
   _submitFinally() {
