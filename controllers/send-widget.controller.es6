@@ -449,7 +449,7 @@ export default class SendWidgetController {
                   type: 'payment',
                   destination: transaction.operations[0].destination,
                   // Trezor expects this in stroops
-                  amount: transaction.operations[0].amount * 10000000
+                  amount: (transaction.operations[0].amount * 10000000).toString()
                 }
               ]
             }
