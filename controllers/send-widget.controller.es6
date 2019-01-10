@@ -443,12 +443,14 @@ export default class SendWidgetController {
                 destination: operation.destination,
                 startingBalance: new BigNumber(operation.startingBalance).times(10000000).toString()
               }
+            break;
             case 'payment':
               trezorOperation = {
                 type: 'payment',
                 destination: operation.destination,
                 amount: new BigNumber(operation.amount).times(10000000).toString()
               }
+            break;
           }
 
           // Object sent to the Trezor API
