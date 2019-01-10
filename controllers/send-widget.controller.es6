@@ -434,6 +434,23 @@ export default class SendWidgetController {
             }
           }
 
+          const operation = transaction.operations[0];
+          let trezorOperation;
+          switch(operation.type) {
+            case 'createAccount':
+              trezorOperation = {
+                type: 'createAccount',
+                destination: operation.destination,
+                startingBalance: new BigNumber(operation.startingBalance).times(10000000).toString()
+              }
+            case 'payment':
+              trezorOperation = {
+                type: 'payment',
+                destination: operation.destination,
+                amount: new BigNumber(operation.amount).times(10000000).toString()
+              }
+          }
+
           // Object sent to the Trezor API
           // Documentation at: https://github.com/trezor/connect/blob/develop/docs/methods/stellarSignTransaction.md
           let trezorTxParams = {
@@ -445,12 +462,7 @@ export default class SendWidgetController {
               sequence: transaction.sequence,
               memo: trezorMemoParams,
               operations: [
-                {
-                  type: 'payment',
-                  destination: transaction.operations[0].destination,
-                  // Trezor expects this in stroops
-                  amount: (transaction.operations[0].amount * 10000000).toString()
-                }
+                trezorOperation
               ]
             }
           };
