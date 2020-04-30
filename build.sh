@@ -1,5 +1,17 @@
-docker build -t stellar-account-viewer .
-docker run -i -t stellar-account-viewer /bin/bash
+#!/bin/bash
 
-# run the following inside of the Docker container:
-# ./node_modules/.bin/interstellar build --env=prd
+DIST="build"
+NAME="stellar-account-viewer"
+
+# find and remove previous containers
+docker ps -a -q --filter "name=$NAME" | grep -q . && docker stop $NAME && docker rm -fv $NAME
+docker build -t $NAME .
+# expose ports for copying files to local file system
+docker run -p 8080:8080 --name $NAME $NAME:latest $1
+# remove previous build from local file system
+# and copy new one from docker
+rm -rf ../$DIST
+docker cp $NAME:/$NAME/.tmp/webpacked $DIST
+# cleanup
+docker stop $NAME
+docker rm $NAME
