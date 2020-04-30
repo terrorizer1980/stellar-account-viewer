@@ -54,6 +54,12 @@ export default class LoginController {
       showOnTrezor: false // don't bother with the "confirm sharing address" prompt on the Trezor device
     };
 
+    // TODO: This should be called only once, probably not a best place here
+    TrezorConnect.manifest({
+      appUrl: 'trezor.io/stellar',
+      email: 'dev@trezor.io',
+    });
+
     TrezorConnect.stellarGetAddress(params).then((result) => {
         if (!result.success) {
             let alert = new Alert({
