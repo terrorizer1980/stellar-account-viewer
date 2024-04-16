@@ -19,9 +19,9 @@
     "interstellar-network": "~0.0.12",
     "interstellar-sessions": "~0.0.10",
     "interstellar-ui-messages": "~0.0.3",
-    "lodash": "^3.10.1",
-    "stellar-base": "~0.6.0",
-    "stellar-sdk": "~0.6.2",
+    "lodash": "^4.17.17",
+    "stellar-base": "~11.0.1",
+    "stellar-sdk": "~11.3.0",
     "trezor-connect": "^8.1.2"
   },
   "devDependencies": {
